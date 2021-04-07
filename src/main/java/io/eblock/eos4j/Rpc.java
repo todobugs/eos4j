@@ -155,18 +155,21 @@ public class Rpc {
 	public Transaction transfer(String pk, String contractAccount, String from, String to, String quantity, String memo)
 			throws Exception {
 		// get chain info
-		ChainInfo info = getChainInfo();
+//		ChainInfo info = getChainInfo();
 //		info.setChainId("cf057bbfb72640471fd910bcb67639c22df9f92470936cddc1ade0e2f2e7dc4f");
 //		info.setLastIrreversibleBlockNum(826366l);
 //		info.setHeadBlockTime(dateFormatter.parse("2018-08-22T09:19:01.000"));
 		// get block info
-		Block block = getBlock(info.getLastIrreversibleBlockNum().toString());
+//		Block block = getBlock(info.getLastIrreversibleBlockNum().toString());
 //		block.setRefBlockPrefix(2919590658l);
 		// tx
 		Tx tx = new Tx();
-		tx.setExpiration(info.getHeadBlockTime().getTime() / 1000 + 60);
-		tx.setRef_block_num(info.getLastIrreversibleBlockNum());
-		tx.setRef_block_prefix(block.getRefBlockPrefix());
+//		tx.setExpiration(info.getHeadBlockTime().getTime() / 1000 + 60);
+//		tx.setRef_block_num(info.getLastIrreversibleBlockNum());
+//		tx.setRef_block_prefix(block.getRefBlockPrefix());
+		tx.setExpiration("2019-02-16T09:16:21");
+		tx.setRef_block_num(63217l);
+		tx.setRef_block_prefix(4094763438l);
 		tx.setNet_usage_words(0l);
 		tx.setMax_cpu_usage_ms(0l);
 		tx.setDelay_sec(0l);
@@ -174,22 +177,27 @@ public class Rpc {
 		List<TxAction> actions = new ArrayList<>();
 		// data
 		Map<String, Object> dataMap = new LinkedHashMap<>();
-		dataMap.put("from", from);
-		dataMap.put("to", to);
-		dataMap.put("quantity", new DataParam(quantity, DataType.asset, Action.transfer).getValue());
-		dataMap.put("memo", memo);
+//		dataMap.put("from", from);
+//		dataMap.put("to", to);
+//		dataMap.put("quantity", new DataParam(quantity, DataType.asset, Action.transfer).getValue());
+//		dataMap.put("memo", memo);
+
+		dataMap.put("from", "lendchaineos");
+		dataMap.put("to", "dahuanghuang");
+		dataMap.put("quantity", "0.0001 EOS");
+		dataMap.put("memo", "返金");
 		// action
 		TxAction action = new TxAction(from, contractAccount, "transfer", dataMap);
 		actions.add(action);
 		tx.setActions(actions);
 		// sgin
-		String sign = Ecc.signTransaction(pk, new TxSign(info.getChainId(), tx));
+		String sign = Ecc.signTransaction(pk, new TxSign("aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906", tx));
 		// data parse
 		String data = Ecc.parseTransferData(from, to, quantity, memo);
 		// reset data
 		action.setData(data);
 		// reset expiration
-		tx.setExpiration(dateFormatter.format(new Date(1000 * Long.parseLong(tx.getExpiration().toString()))));
+//		tx.setExpiration(dateFormatter.format(new Date(1000 * Long.parseLong(tx.getExpiration().toString()))));
 		return pushTransaction("none", tx, new String[] { sign });
 	}
 

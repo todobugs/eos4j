@@ -34,7 +34,7 @@ public class Test {
 		System.out.println("sign :" + sign + " \n ");
 		
 		System.out.println("============= 转账数据序列化 ===============");
-		String data = Ecc.parseTransferData("fromaccount", "toaccount", "10.0020 SYS", "测试123abcdo./,./!@##$%");
+		String data = Ecc.parseTransferData("lendchaineos", "dahuanghuang", "0.0001 EOS", "返奖");
 		System.out.println("seriz data :" + data);
 		System.out.println("transfer eq eosjs seriz " + data.equals(eosjs_transfer_seriz)+" \n ");
 
@@ -45,10 +45,10 @@ public class Test {
 
 		
 		System.out.println("\n******************* Ecc End *******************\n\n\n");
-		
+
 		System.out.println("******************* Rpc Start *******************\n");
 		
-		Rpc rpc = new Rpc("http://47.106.221.171:8888");
+		Rpc rpc = new Rpc("http://127.0.0.1:8088");
 		
 		System.out.println("============= 转账 ===============");
 		try {
@@ -57,7 +57,7 @@ public class Test {
 		}catch(Exception ex) {
 			ex.printStackTrace();
 		}
-		
+		/*
 		System.out.println("============= 创建账户并且抵押 ===============");
 		try {	
 			Transaction t2 = rpc.createAccount("5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3","eosio","ccccc..bbbbb", "EOS8eAX54cJtAngV2V22WZhRCW7e4sTAZz1mC5U22vp8mAGuFdMXx","EOS8eAX54cJtAngV2V22WZhRCW7e4sTAZz1mC5U22vp8mAGuFdMXx", 8192l, "0.01 SYS","0.01 SYS", 0l);
@@ -92,6 +92,6 @@ public class Test {
 		}catch(Exception ex) {
 			ex.printStackTrace();
 		}
-		System.out.println("\n******************* Rpc End *******************");
+		System.out.println("\n******************* Rpc End *******************");*/
 	}
 }
